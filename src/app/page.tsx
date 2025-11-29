@@ -1,5 +1,9 @@
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebarClient } from "./_AppSidebarClient";
+import Link from "next/link";
+import { LogInIcon } from "lucide-react";
+import { SignedIn, SignedOut } from "@/services/clerk/component/signed-in-status";
+import { SidebarUserButton } from "@/features/users/component/side-bar-user-button";
 
 export default function HomePage() {
   return (
@@ -11,16 +15,31 @@ export default function HomePage() {
             <span className="text-xl text-nowrap">WDS Jobs</span>
           </SidebarHeader>
           <SidebarContent>
-            <div className="p-4">Main Content Area</div>
+            <SidebarGroup>
+              <SidebarMenu>
+                <SignedOut>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link href="/sign-in">
+                        <LogInIcon />
+                        <span>Log In</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SignedOut>
+              </SidebarMenu>
+            </SidebarGroup>
           </SidebarContent>
-          <SidebarFooter>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton>Settings</SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-            <div className="p-4">Footer Area</div>
-          </SidebarFooter>
+          <SignedIn>
+            <SidebarFooter>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarUserButton />
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarFooter>
+          </SignedIn>
+
         </Sidebar>
         <main className="flex-1 p-8 overflow-y-auto">
           <h1 className="text-2xl font-bold mb-4">Welcome to WDS Jobs</h1>
