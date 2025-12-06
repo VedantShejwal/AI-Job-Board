@@ -1,5 +1,6 @@
 import { db } from "@/drizzle/db"
 import { UserNotificationSettingsTable } from "@/drizzle/schema"
+import { revalidateUserNotificationSettingsCache } from "./cache/userNotificationSettings"
 
 export async function insertUserNotificationSettings(
   settings: typeof UserNotificationSettingsTable.$inferInsert
@@ -9,6 +10,7 @@ export async function insertUserNotificationSettings(
     .values(settings)
     .onConflictDoNothing()
 
+  revalidateUserNotificationSettingsCache(settings.userId)
 }
 
 export async function updateUserNotificationSettings(
@@ -25,4 +27,5 @@ export async function updateUserNotificationSettings(
       set: settings,
     })
 
+  revalidateUserNotificationSettingsCache(userId)
 }
