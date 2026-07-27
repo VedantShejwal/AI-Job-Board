@@ -29,19 +29,19 @@ import {
   locationRequirements,
   wageIntervals,
 } from "@/drizzle/schema"
-// import {
-//   formatExperienceLevel,
-//   formatJobType,
-//   formatLocationRequirement,
-//   formatWageInterval,
-// } from "../lib/formatters"
-// import { StateSelectItems } from "./StateSelectItems"
-// import { MarkdownEditor } from "@/components/markdown/MarkdownEditor"
+import {
+  formatExperienceLevel,
+  formatJobType,
+  formatLocationRequirement,
+  formatWageInterval,
+} from "../lib/formatters"
+import { StateSelectItems } from "./StateSelectItems"
+import { MarkdownEditor } from "@/components/markdown/MarkdownEditor"
 import { Button } from "@/components/ui/button"
-// import { LoadingSwap } from "@/components/LoadingSwap"
+import { LoadingSwap } from "@/components/LoadingSwap"
 // import { Loader2Icon } from "lucide-react"
-// import { createJobListing, updateJobListing } from "../actions/actions"
-// import { toast } from "sonner"
+import { createJobListing, updateJobListing } from "../actions/actions"
+import { toast } from "sonner"
 
 const NONE_SELECT_VALUE = "none"
 
@@ -78,14 +78,14 @@ export function JobListingForm({
   })
 
   async function onSubmit(data: z.infer<typeof jobListingSchema>) {
-    // const action = jobListing
-    //   ? updateJobListing.bind(null, jobListing.id)
-    //   : createJobListing
-    // const res = await action(data)
+    const action = jobListing
+      ? updateJobListing.bind(null, jobListing.id)
+      : createJobListing
+    const res = await action(data)
 
-    // if (res.error) {
-    //   toast.error(res.message)
-    // }
+    if (res.error) {
+      toast.error(res.message)
+    }
   }
 
   return (
@@ -147,7 +147,7 @@ export function JobListingForm({
                           <SelectContent>
                             {wageIntervals.map(interval => (
                               <SelectItem key={interval} value={interval}>
-                                {/* {formatWageInterval(interval)} */}
+                                {formatWageInterval(interval)}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -203,7 +203,7 @@ export function JobListingForm({
                           Clear
                         </SelectItem>
                       )}
-                      {/* <StateSelectItems /> */}
+                      <StateSelectItems />
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -226,7 +226,7 @@ export function JobListingForm({
                   <SelectContent>
                     {locationRequirements.map(lr => (
                       <SelectItem key={lr} value={lr}>
-                        {/* {formatLocationRequirement(lr)} */}
+                        {formatLocationRequirement(lr)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -251,7 +251,7 @@ export function JobListingForm({
                   <SelectContent>
                     {jobListingTypes.map(type => (
                       <SelectItem key={type} value={type}>
-                        {/* {formatJobType(type)} */}
+                        {formatJobType(type)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -275,7 +275,7 @@ export function JobListingForm({
                   <SelectContent>
                     {experienceLevels.map(experience => (
                       <SelectItem key={experience} value={experience}>
-                        {/* {formatExperienceLevel(experience)} */}
+                        {formatExperienceLevel(experience)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -292,7 +292,7 @@ export function JobListingForm({
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                {/* <MarkdownEditor {...field} markdown={field.value} /> */}
+                <MarkdownEditor {...field} markdown={field.value} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -303,9 +303,9 @@ export function JobListingForm({
           type="submit"
           className="w-full"
         >
-          {/* <LoadingSwap isLoading={form.formState.isSubmitting}>
+          <LoadingSwap isLoading={form.formState.isSubmitting}>
             Create Job Listing
-          </LoadingSwap> */}
+          </LoadingSwap>
         </Button>
       </form>
     </Form>
